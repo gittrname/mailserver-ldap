@@ -1,18 +1,34 @@
 #!/bin/bash
 
-
 #########################################
 # Setup conf
 #########################################
 
-# Set LDAP conf: ldap_search_base (ex: base=dc=mail, dc=example, dc=org)
+## Postfix ##
+
+# Set LDAP conf: ldap_servers (ex: ldap://ldap)
+if [ -n "$LDAP_SERVER" ]; then
+        sed -i "s/^ldap_servers\s*:.*$/ldap_servers: $LDAP_SERVER/" /etc/postfix/saslauthd.conf
+fi
+
+# Set LDAP conf: ldap_bind_dn (ex: bind_dn=cn=admin, ou=users, dc=example, dc=org)
+if [ -n "$LDAP_BIND_DN" ]; then
+	sed -i "s/^ldap_bind_dn\s*:.*$/ldap_bind_dn: $LDAP_BIND_DN/" /etc/postfix/saslauthd.conf
+fi
+
+# Set LDAP conf: ldap_bind_pw
+if [ -n "$LDAP_BIND_PW" ]; then
+	sed -i "s/^ldap_password\s*:.*$/ldap_password: $LDAP_BIND_PW/" /etc/postfix/saslauthd.conf
+fi
+
+# Set LDAP conf: ldap_search_base (ex: base=dc=users, dc=example, dc=org)
 if [ -n "$LDAP_BASE" ]; then
 	sed -i "s/^ldap_search_base\s*:.*$/ldap_search_base: $LDAP_BASE/" /etc/postfix/saslauthd.conf
 fi
 
 # Set LDAP conf: ldap_filter (ex: uid=%u)
 if [ -n "$LDAP_USER_FIELD" ]; then
-	sed -i "s/^ldap_filter\s*:.*$/ldap_filter: $LDAP_USER_FIELD=%u/" /etc/postfix/saslauthd.conf
+	sed -i "s/^ldap_filter\s*:.*$/ldap_filter: ($LDAP_USER_FIELD=%u)/" /etc/postfix/saslauthd.conf
 fi
 
 # Set Postfix conf: virtual_mailbox_domains (ex: example.org)
@@ -26,15 +42,38 @@ if [ -n "$HOSTNAME" ]; then
 fi
 
 
+## Dovecot ##
+
+# Set LDAP conf: hosts (ex: ldap://ldap)
+if [ -n "$LDAP_SERVER" ]; then
+        sed -i "s/^hosts\s*:.*$/hosts: $LDAP_SERVER/" /etc/dovecot/dovecot-ldap.conf.ext
+fi
+
+# Set LDAP conf: base (ex: base=dc=mail, dc=example, dc=org)
+if [ -n "$LDAP_BASE" ]; then
+	sed -i "s/^\s*base\s*=.*$/base=$LDAP_BASE/g" /etc/dovecot/dovecot-ldap.conf.ext
+fi
+
+# Set LDAP conf: user_filter and pass_filter (ex: user_filter = (uid=%n))
+if [ -n "$LDAP_USER_FIELD" ]; then
+	sed -i "s/^\s*user_filter\s*=.*$/user_filter=($LDAP_USER_FIELD=%n)/g" /etc/dovecot/dovecot-ldap.conf.ext
+	sed -i "s/^\s*pass_filter\s*=.*$/pass_filter=($LDAP_USER_FIELD=%n)/g" /etc/dovecot/dovecot-ldap.conf.ext
+fi
+
+# Set LDAP conf: pass_attrs (ex: pass_attrs = uid=user,userPassword=password)
+if [ -n "$LDAP_USER_FIELD" ]; then
+	sed -i "s/^\s*pass_attrs\s*=.*$/pass_attrs=$LDAP_USER_FIELD=user/g" /etc/dovecot/dovecot-ldap.conf.ext
+fi
+
 
 #########################################
 # Generate SSL certification
 #########################################
 
 CERT_FOLDER="/etc/ssl/localcerts"
-KEY_PATH="$CERT_FOLDER/smtp.key.pem"
-CSR_PATH="$CERT_FOLDER/smtp.csr.pem"
-CERT_PATH="$CERT_FOLDER/smtp.cert.pem"
+KEY_PATH="$CERT_FOLDER/mail.key.pem"
+CSR_PATH="$CERT_FOLDER/mail.csr.pem"
+CERT_PATH="$CERT_FOLDER/mail.cert.pem"
 
 if [ ! -f $CERT_PATH ] || [ ! -f $KEY_PATH ]; then
 	mkdir -p $CERT_FOLDER
@@ -43,7 +82,7 @@ if [ ! -f $CERT_PATH ] || [ ! -f $KEY_PATH ]; then
     openssl genrsa -out $KEY_PATH
 
     openssl req -new -key $KEY_PATH -out $CSR_PATH \
-    -subj "/CN=smtp"
+    -subj "/CN=mail"
 
     openssl x509 -req -days 3650 -in $CSR_PATH -signkey $KEY_PATH -out $CERT_PATH
 fi
@@ -89,6 +128,12 @@ function services {
 	echo "$1 Postfix"
 	echo "#########################################"
 	postfix $1
+
+	echo ""
+	echo "#########################################"
+	echo "$1 Dovecot"
+	echo "#########################################"
+	service dovecot $1
 }
 
 # Set signal handlers
