@@ -32,21 +32,11 @@ RUN apt-get update && apt-get install -y \
 	openssl \
 	rsyslog \
 	postfix \
-	postfix-ldap \
-	sasl2-bin \
-	libsasl2-modules-ldap \
 && rm -rf /var/lib/apt/lists/*
-
-# Enable auth daemon
-RUN sed -i 's/^START=.*$/START=yes/' /etc/default/saslauthd
-RUN sed -i 's/^MECHANISMS=.*$/MECHANISMS="ldap"/' /etc/default/saslauthd
-RUN sed -i 's/^OPTIONS=.*$/OPTIONS="-c -m \/var\/spool\/postfix\/var\/run\/saslauthd"/' /etc/default/saslauthd
-RUN adduser postfix sasl
-RUN ln -s /etc/postfix/saslauthd.conf /etc/saslauthd.conf
 
 # Add postfix conf
 ADD postfix_conf /etc/postfix
-
+RUN chmod 600 -R /etc/postfix
 
 ########################################
 #
@@ -61,8 +51,6 @@ EXPOSE 143
 EXPOSE 995
 # POP port
 EXPOSE 110
-# LMTP port
-EXPOSE 24
 
 VOLUME /var/mail
 VOLUME /etc/ssl/localcerts

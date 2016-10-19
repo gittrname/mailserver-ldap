@@ -1,19 +1,29 @@
 #########################
+#
+#########################
+
+# service user
+mail_owner = postfix
+
+
+#########################
 # Transport
 #########################
+
+# allow interface
+inet_interfaces = all
 
 # Hostname
 myhostname = smtp.example.org
 
 # This container does not host local mailboxes
-mydestination =
+mydestination = 
 
 # Do not relay mail for other domains
 relay_domains =
 
 # Forward the virtual domains to the MDA through the LMTP protocol
-#virtual_transport = lmtp:inet:mda:24
-virtual_transport = lmtp:inet:localhost:24
+virtual_transport = lmtp:unix:private/dovecot-lmtp
 
 # Virtual domain
 virtual_mailbox_domains = example.org
@@ -59,13 +69,16 @@ smtpd_recipient_limit = 100
 
 # SASL Support
 smtpd_sasl_auth_enable = yes
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
 smtpd_sasl_security_options = noanonymous
 broken_sasl_auth_clients = yes
 
 # TLS encryption
 smtp_tls_security_level = may
 smtpd_tls_security_level = may
-smtpd_tls_auth_only = yes
+#smtpd_tls_auth_only = yes
+smtpd_tls_auth_only = no
 smtpd_tls_key_file = /etc/ssl/localcerts/mail.key.pem
 smtpd_tls_cert_file = /etc/ssl/localcerts/mail.cert.pem
 smtpd_tls_loglevel = 0
