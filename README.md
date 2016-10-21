@@ -1,41 +1,43 @@
-Postfix + Dovecot ‚É‚æ‚éƒ[ƒ‹ƒT[ƒo[‚Å ƒ[ƒ‹ƒ†[ƒU[‚ÍLDAP‚ÅŠÇ—‚µ‚Ü‚·B
+mailserver-ldap
+====
+Postfix + Dovecot ã«ã‚ˆã‚‹ãƒ¡ãƒ¼ãƒ«ã‚µãƒ¼ãƒãƒ¼ã§ã™ ãƒ¡ãƒ¼ãƒ«ãƒ¦ãƒ¼ã‚¶ãƒ¼ã¯LDAPã§ç®¡ç†ã—ã¾ã™ã€‚
+teidæ°ä½œæˆã®ã€Œteid/postfix-ldapã€ã¨ã€Œteid/dovecot-ldapã€ã‚’
+ã²ã¨ã¾ã¨ã‚ã«ã—ã¤ã¤25ã€587ã®å„ãƒãƒ¼ãƒˆã§èªè¨¼ã‚’å¿…é ˆã™ã‚‹ãªã©ã®å¤‰æ›´ã‚’åŠ ãˆã¦ã„ã¾ã™ã€‚
 
-teidì¬‚Ìuteid/postfix-ldapv‚Æuteid/dovecot-ldapv‚ğ
-‚Ğ‚Æ‚Ü‚Æ‚ß‚É‚µ‚Â‚Â25A587‚ÌŠeƒ|[ƒg‚Å”FØ‚ğ•K{‚·‚é‚È‚Ç‚Ì•ÏX‚ğ‰Á‚¦‚Ä‚¢‚Ü‚·B
+## â– Descriptinn
+â– ä½¿ç”¨ãƒãƒ¼ãƒˆ
+ãƒ»25  SMTP
+ãƒ»587 Submission
+ãƒ»465 SMTPs
+ãƒ»143 IMAP
+ãƒ»993 IMAPs
+ãƒ»110 POP
+ãƒ»995 POPs
 
-¡g—pƒ|[ƒg
-E25  SMTP
-E587 Submission
-E465 SMTPs
-E143 IMAP
-E993 IMAPs
-E110 POP
-E995 POPs
+â– ãƒ‡ãƒ¼ã‚¿ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
+ãƒ»/var/mail
+ã€€ã‚¢ã‚«ã‚¦ãƒ³ãƒˆãƒ¡ãƒ¼ãƒ«ãƒœãƒƒã‚¯ã‚¹ä¿å­˜å…ˆ
+ãƒ»/etc/ssl/localcerts/
+ã€€SSLè¨¼æ˜æ›¸æ ¼ç´å…ˆ
 
-¡ƒf[ƒ^ƒfƒBƒŒƒNƒgƒŠ
-E/var/mail
-@ƒAƒJƒEƒ“ƒgƒ[ƒ‹ƒ{ƒbƒNƒX•Û‘¶æ
-E/etc/ssl/localcerts/
-@SSLØ–¾‘Ši”[æ
+â– ç’°å¢ƒå¤‰æ•°
+ãƒ»LDAP_BASE
+ã€€ã“ã®DNã‚’èµ·ç‚¹ã«LDAPã®æ¢ç´¢ã‚’è¡Œã„ã¾ã™ã€‚
+ãƒ»LDAP_USER_FIELD
+ã€€ã“ã“ã«æŒ‡å®šã—ãŸfieldã§ãƒ¦ãƒ¼ã‚¶ãƒ¼èªè¨¼ã‚’è¡Œã„ã¾ã™
+ãƒ»DOMAIN
+ã€€ã“ã“ã«è¨˜è¼‰ã•ã‚ŒãŸãƒ‰ãƒ¡ã‚¤ãƒ³å½“ã¦ã®ãƒ¡ãƒ¼ãƒ«ã‚’Dovecotã«ãƒ•ã‚©ãƒ¼ãƒ¯ãƒ¼ãƒ‰ã—ã¾ã™ã€‚
+ãƒ»HOSTNAME
+ã€€ãƒ¡ãƒ¼ãƒ«ã‚µãƒ¼ãƒãƒ¼ã®ãƒ›ã‚¹ãƒˆå
 
-¡ŠÂ‹«•Ï”
-ELDAP_BASE
-@‚±‚ÌDN‚ğ‹N“_‚ÉLDAP‚Ì’Tõ‚ğs‚¢‚Ü‚·B
-ELDAP_USER_FIELD
-@‚±‚±‚Éw’è‚µ‚½field‚Åƒ†[ƒU[”FØ‚ğs‚¢‚Ü‚·
-EDOMAIN
-@‚±‚±‚É‹LÚ‚³‚ê‚½ƒhƒƒCƒ““–‚Ä‚Ìƒ[ƒ‹‚ğDovecot‚ÉƒtƒH[ƒ[ƒh‚µ‚Ü‚·B
-EHOSTNAME
-@ƒ[ƒ‹ƒT[ƒo[‚ÌƒzƒXƒg–¼
+## ä½¿ç”¨ä¾‹
+ãƒ»ãƒ“ãƒ«ãƒ‰
+$ git clone [github]
+$ docker build -t mailserver-ldap mailserver-ldap
 
-¡g—p—á
-Eƒrƒ‹ƒh
-# git clone [github]
-# docker build -t mailserver-ldap mailserver-ldap
-
-E‹N“®
+ãƒ»èµ·å‹•
 // LDAP
-# docker run -d \
+$ docker run -d \
 	--name ldap \
 	-p 80:80 \
 	-e LDAP_DOMAIN=example.com \
@@ -44,7 +46,7 @@ teidì¬‚Ìuteid/postfix-ldapv‚Æuteid/dovecot-ldapv‚ğ
 	sharaku/ldap
 
 // Postfix + Dovecot
-# docker run -d \
+$ docker run -d \
 	--name mail \
 	--link ldap \
 	-p 25:25 \
@@ -62,7 +64,7 @@ teidì¬‚Ìuteid/postfix-ldapv‚Æuteid/dovecot-ldapv‚ğ
 	mailserver-ldap
 
 
-ƒTƒ“ƒvƒ‹jdocker-compose.yml—á
+ãƒ»docker-compose.ymlä¾‹
 version: '2'
 services:
   mail:
