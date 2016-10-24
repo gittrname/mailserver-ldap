@@ -51,6 +51,8 @@ EXPOSE 143
 EXPOSE 995
 # POP port
 EXPOSE 110
+# ManageSieve port
+EXPOSE 4190
 
 VOLUME /var/mail
 VOLUME /etc/ssl/localcerts
