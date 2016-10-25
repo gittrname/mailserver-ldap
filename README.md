@@ -3,7 +3,7 @@ mailserver-ldap
 
 Postfix + Dovecot によるメールサーバーです メールユーザーはLDAPで管理します。  
 teid氏作成の「teid/postfix-ldap」と「teid/dovecot-ldap」を  
-ひとまとめにしつつ25、587の各ポートで認証を必須するなどの変更を加えています。  
+ひとまとめにしつつ587の各ポートで認証を必須するなどの変更を加えています。  
 
 *■使用ポート*  
 ・25  SMTP  
@@ -13,8 +13,9 @@ teid氏作成の「teid/postfix-ldap」と「teid/dovecot-ldap」を
 ・993 IMAPs  
 ・110 POP  
 ・995 POPs  
+・4190 managesieve  
   
-*■データディレクトリ*
+*■データディレクトリ*  
 ・/var/mail  
 	アカウントメールボックス保存先  
 ・/etc/ssl/localcerts/  
