@@ -18,7 +18,7 @@ fi
 
 # Set Postfix conf: relayhost
 if [ -n "$RELAY_HOST" ]; then
-	sed -i "s|^relayhost\s*=.*$|relayhost = $relayhost|g" /etc/postfix/main.cf
+	sed -i "s|^relayhost\s*=.*$|relayhost = $RELAY_HOST|g" /etc/postfix/main.cf
 fi
 
 ## Dovecot ##
