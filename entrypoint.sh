@@ -16,6 +16,10 @@ if [ -n "$HOSTNAME" ]; then
 	sed -i "s|^myhostname\s*=.*$|myhostname = $HOSTNAME|g" /etc/postfix/main.cf
 fi
 
+# Set Postfix conf: relayhost
+if [ -n "$RELAY_HOST" ]; then
+	sed -i "s|^relayhost\s*=.*$|relayhost = $relayhost|g" /etc/postfix/main.cf
+fi
 
 ## Dovecot ##
 

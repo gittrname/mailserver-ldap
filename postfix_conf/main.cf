@@ -31,6 +31,8 @@ virtual_mailbox_domains = example.org
 # Use native resolution to resolve /etc/hosts entries (mda)
 lmtp_host_lookup = native
 
+# OP25B
+relayhost = 
 
 #########################
 # Customizations
