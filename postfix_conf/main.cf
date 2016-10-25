@@ -93,7 +93,7 @@ smtpd_tls_received_header = yes
 # HELO restrictions
 smtpd_helo_restrictions =
                         permit_sasl_authenticated,
-                        reject_non_fqdn_helo_hostname,
+#                        reject_non_fqdn_helo_hostname,
                         reject_invalid_helo_hostname,
                         permit
 
