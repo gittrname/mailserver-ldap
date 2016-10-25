@@ -43,6 +43,8 @@ RUN chmod 600 -R /etc/postfix
 # Dovecot Settings
 #
 ########################################
+# LMTP port
+EXPOSE 24
 # IMAPs port
 EXPOSE 993
 # IMAP port

@@ -23,7 +23,7 @@ mydestination =
 relay_domains =
 
 # Forward the virtual domains to the MDA through the LMTP protocol
-virtual_transport = lmtp:unix:private/dovecot-lmtp
+virtual_transport = lmtp:inet:localhost:24
 
 # Virtual domain
 virtual_mailbox_domains = example.org
