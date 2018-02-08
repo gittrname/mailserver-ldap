@@ -6,6 +6,11 @@
 
 ## Postfix ##
 
+# Set Postfix conf: mynetworks(ex: 192.168.0.0/24)
+if [ -n "$MYNETWORKS" ]; then
+        sed -i "s|^mynetworks\s*=.*$|mynetworks = $MYNETWORKS|g" /etc/postfix/main.cf
+fi
+
 # Set Postfix conf: virtual_mailbox_domains (ex: example.org)
 if [ -n "$DOMAIN" ]; then
 	sed -i "s|^virtual_mailbox_domains\s*=.*$|virtual_mailbox_domains = $DOMAIN|g" /etc/postfix/main.cf

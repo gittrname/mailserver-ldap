@@ -16,6 +16,9 @@ inet_interfaces = all
 # Hostname
 myhostname = smtp.example.org
 
+# My networks
+mynetworks = 127.0.0.0/8, 172.168.0.0/16 
+
 # This container does not host local mailboxes
 mydestination = 
 
