@@ -9,6 +9,7 @@ ENV HTTPS_PROXY $https_proxy
 
 # Setup startup script
 ADD entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 CMD ["/entrypoint.sh"]
 
 #######################################
