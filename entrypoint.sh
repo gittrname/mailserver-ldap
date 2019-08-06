@@ -28,6 +28,11 @@ fi
 
 ## Dovecot ##
 
+# Set UpStream Proxy
+if [ -n "$UPSTREAM_PROXY" ]; then
+    echo haproxy_trusted_networks = $UPSTREAM_PROXY >> /etc/dovecot/local.conf
+fi
+
 # Set LDAP conf: hosts (ex: ldap://ldap)
 if [ -n "$LDAP_SERVER" ]; then
         sed -i "s|^hosts\s*=.*$|hosts=$LDAP_SERVER|g" /etc/dovecot/dovecot-ldap.conf.ext

@@ -30,6 +30,9 @@ teid氏作成の「teid/postfix-ldap」と「teid/dovecot-ldap」を
 　ここに記載されたドメイン当てのメールをDovecotにフォーワードします。  
 ・HOSTNAME  
 　メールサーバーのホスト名。  
+・UPSTREAM_PROXY  
+　ELBなどのリバースプロキシ元のIPアドレスを記載します。
+　proxy_protocolに対応した設定が有効になります。
 
 ## 使用例
 *・ビルド*

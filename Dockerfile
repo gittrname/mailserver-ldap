@@ -24,7 +24,7 @@ EXPOSE 587
 # SMTP (SSL)
 EXPOSE 465
 
-VOLUME /var/spool/postfix
+#VOLUME /var/spool/postfix
 VOLUME /etc/ssl/localcerts
 VOLUME /etc/postfix
 
@@ -38,6 +38,7 @@ RUN apt-get update && apt-get install -y \
 # Add postfix conf
 ADD postfix_conf /etc/postfix
 RUN chmod 600 -R /etc/postfix
+RUN chmod 700 -R /etc/postfix/postfix-files
 
 ########################################
 #

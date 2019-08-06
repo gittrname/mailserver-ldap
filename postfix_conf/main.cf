@@ -23,7 +23,7 @@ mynetworks = 127.0.0.0/8, 172.168.0.0/16
 mydestination = 
 
 # Do not relay mail for other domains
-relay_domains =
+relay_domains = 
 
 # Forward the virtual domains to the MDA through the LMTP protocol
 virtual_transport = lmtp:inet:localhost:24
@@ -89,6 +89,11 @@ smtpd_tls_cert_file = /etc/ssl/localcerts/mail.cert.pem
 smtpd_tls_loglevel = 0
 smtpd_tls_received_header = yes
 
+#########################
+# Proxy
+#########################
+
+smtpd_upstream_proxy_protocol = haproxy
 
 #########################
 # Restrictions
@@ -104,6 +109,7 @@ smtpd_helo_restrictions =
 
 # FROM restrictions
 smtpd_sender_restrictions = 
+                        reject_unauth_pipelining,
                         permit_sasl_authenticated,
                         reject_non_fqdn_sender,
                         reject_unknown_sender_domain,
@@ -118,7 +124,9 @@ smtpd_recipient_restrictions =
                         permit_sasl_authenticated,
                         reject_unauth_destination,
                         reject_unknown_client_hostname,
-                        reject_rbl_client zen.spamhaus.org,
-                        reject_rbl_client bl.spamcop.net,
-                        reject_rbl_client cbl.abuseat.org,
                         permit
+
+# RELAY restrictions
+smtpd_relay_restrictions = permit_mynetworks,
+                        permit_sasl_authenticated,
+                        reject_unauth_destination
