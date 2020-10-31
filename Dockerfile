@@ -23,6 +23,8 @@ EXPOSE 25
 EXPOSE 587
 # SMTP (SSL)
 EXPOSE 465
+# Haproxy port
+EXPOSE 10025
 
 #VOLUME /var/spool/postfix
 VOLUME /etc/ssl/localcerts
@@ -57,6 +59,9 @@ EXPOSE 995
 EXPOSE 110
 # ManageSieve port
 EXPOSE 4190
+# Haproxy port
+EXPOSE 10110
+EXPOSE 10143
 
 VOLUME /var/mail
 VOLUME /etc/ssl/localcerts

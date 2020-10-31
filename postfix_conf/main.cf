@@ -89,11 +89,13 @@ smtpd_tls_cert_file = /etc/ssl/localcerts/mail.cert.pem
 smtpd_tls_loglevel = 0
 smtpd_tls_received_header = yes
 
-#########################
-# Proxy
-#########################
 
-smtpd_upstream_proxy_protocol = haproxy
+#########################
+# Haproxy
+#########################
+postscreen_upstream_proxy_protocol = haproxy
+postscreen_upstream_proxy_timeout = 5s
+
 
 #########################
 # Restrictions
@@ -110,7 +112,6 @@ smtpd_helo_restrictions =
 # FROM restrictions
 smtpd_sender_restrictions = 
                         reject_unauth_pipelining,
-                        permit_sasl_authenticated,
                         reject_non_fqdn_sender,
                         reject_unknown_sender_domain,
                         permit 

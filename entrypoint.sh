@@ -30,7 +30,8 @@ fi
 
 # Set UpStream Proxy
 if [ -n "$UPSTREAM_PROXY" ]; then
-    echo haproxy_trusted_networks = $UPSTREAM_PROXY >> /etc/dovecot/local.conf
+    echo haproxy_trusted_networks = $UPSTREAM_PROXY > /etc/dovecot/local.conf
+    echo haproxy_timeout = 3s >> /etc/dovecot/local.conf
 fi
 
 # Set LDAP conf: hosts (ex: ldap://ldap)
